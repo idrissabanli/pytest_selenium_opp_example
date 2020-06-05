@@ -1,24 +1,25 @@
 from selenium import webdriver
-import pytest
+from unittest import TestCase
 
-class TestGoogle():
+class TestGoogle(TestCase):
 
-    @pytest.fixture
-    def setUp_tearDown(self):
-        self.browser_driver = webdriver.Firefox(executable_path='/home/idris/PythonProjects/python_oop/geckodriver')
-        self.browser_driver.get('https://www.google.com/')
-        yield
-        self.browser_driver.close()
+    @classmethod
+    def setUpClass(cls):
+        cls.browser_driver = webdriver.Firefox(executable_path='/home/idris/PythonProjects/python_oop/geckodriver')
+        cls.browser_driver.get('https://www.google.com/')
 
-    def test_title(self, setUp_tearDown):
+    def test_title(self):
         expected_page_title = 'Google'
         actual_page_title = self.browser_driver.title
         assert expected_page_title == actual_page_title
     
-    def test_input(self, setUp_tearDown):
+    def test_input(self):
         self.browser_driver.find_element_by_css_selector('#tsf > div:nth-child(2) > div.A8SBwf > div.RNNXgb > div > div.a4bIc > input')
 
-    
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser_driver.close()
+        
 
 
 
